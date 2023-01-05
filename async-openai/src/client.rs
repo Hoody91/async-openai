@@ -78,7 +78,7 @@ impl Client {
     }
 
     pub fn api_type(&self) -> &str {
-        &&self.api_type
+        &self.api_type
     }
 
     // API groups

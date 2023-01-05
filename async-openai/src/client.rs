@@ -22,6 +22,7 @@ pub struct Client {
     api_base: String,
     org_id: String,
     backoff: backoff::ExponentialBackoff,
+    api_type: String,
 }
 
 /// Default v1 API base url
@@ -56,6 +57,11 @@ impl Client {
         self.api_base = api_base.into();
         self
     }
+    /// To use a different supported endpoint
+    pub fn with_api_type<S: Into<String>>(mut self, api_type: S) -> Self {
+        self.api_type = api_type.into();
+        self
+    }
 
     /// Exponential backoff for retrying [rate limited](https://help.openai.com/en/articles/5955598-is-api-usage-subject-to-any-rate-limits) requests. Form submissions are not retried.
     pub fn with_backoff(mut self, backoff: backoff::ExponentialBackoff) -> Self {
@@ -69,6 +75,10 @@ impl Client {
 
     pub fn api_key(&self) -> &str {
         &self.api_key
+    }
+
+    pub fn api_type(&self) -> &str {
+        &&self.api_type
     }
 
     // API groups
